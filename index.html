@@ -9,11 +9,17 @@
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
         .heritage-font { font-family: 'Cinzel', serif; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .animate-fade { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
-<body class="bg-[#0f0707] text-[#fbf7f2] min-h-screen flex flex-col">
+<body class="bg-[#0f0707] text-[#fbf7f2] min-h-screen flex flex-col animate-fade">
 
-    <header class="relative bg-[linear-gradient(to_bottom,rgba(20,8,8,0.85),rgba(15,7,7,1))], url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200') bg-cover bg-center border-b border-amber-900/30 py-16 px-4 text-center">
+    <header 
+    class="relative bg-cover bg-center border-b border-amber-900/30 py-16 px-4 text-center"
+    style="background-image:
+    linear-gradient(to bottom, rgba(20,8,8,0.85), rgba(15,7,7,1)),
+    url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200');">
         <div class="max-w-3xl mx-auto">
             <span class="text-[10px] tracking-widest font-bold text-amber-500 uppercase bg-amber-950/80 px-3 py-1.5 rounded-full border border-amber-800/50">
                 🪔 Old Dhaka Cultural Archive
@@ -27,6 +33,18 @@
         </div>
     </header>
 
+<!-- Add this right below the header -->
+<div class="max-w-3xl mx-auto px-4 py-6 text-center">
+    <p class="italic text-amber-200/80 text-sm md:text-base">
+        “Every alley of Shakhari Bazar carries centuries of memory.”
+    </p>
+    <p class="italic text-amber-200/80 text-sm md:text-base">
+        “Share your memorys to the world.”
+       </p>
+</div>
+
+<main class="max-w-6xl mx-auto ...">
+
     <main class="max-w-6xl mx-auto px-4 py-8 w-full flex-grow grid grid-cols-1 lg:grid-cols-3 gap-8">
         <section class="lg:col-span-1 space-y-6">
             <div class="bg-[#190d0d] border border-amber-900/30 rounded-2xl p-5 h-fit">
@@ -36,8 +54,13 @@
                 <p class="text-xs text-amber-100/60 mb-4">Add new moments, heritage spots, or festival memories directly from your phone gallery.</p>
                 <form id="story-form" class="space-y-4" onsubmit="handleFormSubmit(event)">
                     <div>
+                        <label class="block text-[11px] font-semibold text-amber-300 mb-1">Your name</label>
+                        <input type="text" id="Your name" required placeholder="What is your name?" 
+                               class="w-full text-xs bg-[#0f0707] border border-amber-900/50 rounded-xl p-3 text-amber-100 focus:outline-none focus:border-amber-400">
+                    </div>
+                    <div>
                         <label class="block text-[11px] font-semibold text-amber-300 mb-1">Story Title</label>
-                        <input type="text" id="story-title" required placeholder="e.g., Durga Puja Madness" 
+                        <input type="text" id="Story Title" required placeholder="the festival name?" 
                                class="w-full text-xs bg-[#0f0707] border border-amber-900/50 rounded-xl p-3 text-amber-100 focus:outline-none focus:border-amber-400">
                     </div>
                     <div>
