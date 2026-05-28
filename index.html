@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>the cultures of Shakhari Bazar</title>
+    <title>Shakhari Bazar Chronicles</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
@@ -13,15 +13,15 @@
 </head>
 <body class="bg-[#0f0707] text-[#fbf7f2] min-h-screen flex flex-col justify-between">
 
-    <header class="relative bg-[linear-gradient(to_bottom,rgba(20,8,8,0.85),rgba(15,7,7,1))], url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200') bg-cover bg-center border-b border-amber-900/30 py-20 px-4 text-center">
+    <header class="relative bg-[linear-gradient(to_bottom,rgba(20,8,8,0.85),rgba(15,7,7,1))], url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1200') bg-cover bg-center border-b border-amber-900/30 py-16 px-4 text-center">
         <div class="max-w-3xl mx-auto">
             <span class="text-[10px] tracking-widest font-bold text-amber-500 uppercase bg-amber-950/80 px-3 py-1.5 rounded-full border border-amber-800/50">
                 🪔 Old Dhaka Cultural Archive
             </span>
-            <h1 class="heritage-font text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 mt-4 tracking-wide drop-shadow-lg">
+            <h1 class="heritage-font text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 mt-3 tracking-wide drop-shadow-lg">
                 SHAKHARI BAZAR
             </h1>
-            <p class="text-xs md:text-sm text-amber-100/70 max-w-xl mx-auto mt-4 leading-relaxed">
+            <p class="text-xs text-amber-100/70 max-w-xl mx-auto mt-3 leading-relaxed">
                 A digital sanctuary preserving the narrow lanes, sound of conch shells, traditional Hindu craftsmanship, and the pure euphoria of our festivals.
             </p>
         </div>
@@ -31,16 +31,37 @@
         
         <section class="lg:col-span-1 space-y-6">
             
-            <div class="bg-[#190d0d] border border-amber-900/30 rounded-2xl p-5">
+            <div class="bg-[#190d0d] border border-amber-900/30 rounded-2xl p-5 h-fit">
                 <h2 class="heritage-font text-base font-bold text-amber-400 mb-2 flex items-center gap-2">
-                    <span>✨</span> Share Your Story
+                    <span>🪔</span> Share Your Story
                 </h2>
-                <p class="text-xs text-amber-100/60 leading-relaxed mb-4">
-                    Want to add your own street photography or local histories? You can hardcode your memories directly into the database array inside the script!
-                </p>
-                <div class="bg-[#0f0707] p-3 rounded-xl border border-amber-950 text-center">
-                    <span class="text-[11px] font-semibold text-amber-500/90">📍 Location: Kotwali, Old Dhaka</span>
-                </div>
+                <p class="text-xs text-amber-100/60 mb-4">Add new moments, heritage spots, or festival memories directly from your phone gallery.</p>
+                
+                <form id="story-form" class="space-y-4" onsubmit="handleFormSubmit(event)">
+                    <div>
+                        <label class="block text-[11px] font-semibold text-amber-300 mb-1">Story Title</label>
+                        <input type="text" id="story-title" required placeholder="e.g., Durga Puja Madness" 
+                               class="w-full text-xs bg-[#0f0707] border border-amber-900/50 rounded-xl p-3 text-amber-100 focus:outline-none focus:border-amber-400">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-[11px] font-semibold text-amber-300 mb-1">Select Photo</label>
+                        <div class="relative flex items-center justify-center bg-[#0f0707] border border-dashed border-amber-900/60 rounded-xl p-4 cursor-pointer hover:bg-[#1a0d0d] transition">
+                            <input type="file" id="story-image" accept="image/*" required class="absolute inset-0 opacity-0 cursor-pointer" onchange="previewImage(event)">
+                            <span id="upload-placeholder" class="text-xs text-amber-500/80 font-medium">📷 Select From Phone Gallery</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-semibold text-amber-300 mb-1">The Narrative / History</label>
+                        <textarea id="story-text" rows="4" required placeholder="Write about the ritual, historical context, or personal experience..." 
+                                  class="w-full text-xs bg-[#0f0707] border border-amber-900/50 rounded-xl p-3 text-amber-100 focus:outline-none focus:border-amber-400 resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-amber-600 via-amber-500 to-orange-600 text-stone-950 py-3 rounded-xl hover:opacity-90 shadow-lg shadow-orange-950/20 transition">
+                        Publish Live to Feed
+                    </button>
+                </form>
             </div>
 
             <div class="bg-[#190d0d] border border-amber-900/30 rounded-2xl p-5">
@@ -74,9 +95,7 @@
 
     <script>
         // --- DATA STORAGE ARRAY ---
-        // Bro, whenever you want to add a permanent new story or photo, just copy an entire block 
-        // between the curly braces {}, add a comma, and paste it at the top of this list!
-        const shakhariData = [
+        let shakhariData = [
             {
                 title: "The Legacy of the Shankha Artisans",
                 image: "https://images.unsplash.com/photo-1609137144813-9ec4890d2358?q=80&w=600",
@@ -86,13 +105,24 @@
                 title: "The Madness of Dashami Devotion",
                 image: "https://images.unsplash.com/photo-1605714349318-72ee331d1632?q=80&w=600",
                 text: "On the final day of Durga Puja, our narrow lanes pack with thousands of devotees singing, dancing, and carrying the majestic idols toward the river. The energy is intense, sweaty, beautiful, and deeply emotional all at once."
-            },
-            {
-                title: "Traditional Architecture & Courtyards",
-                image: "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=600",
-                text: "Beyond the storefronts lie ancient, multi-tiered residential buildings featuring classic open-air inner courtyards. These century-old structures hold generations of joint family memories, keeping traditional community values completely alive."
             }
         ];
+
+        let selectedImageBase64 = "";
+
+        // Convert mobile uploaded photo to readable string data
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const placeholder = document.getElementById('upload-placeholder');
+            if (file) {
+                placeholder.innerText = `✅ ${file.name.substring(0, 15)}...`;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    selectedImageBase64 = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
         // Layout Generator function
         function loadContent() {
@@ -106,6 +136,23 @@
                     </div>
                 </article>
             `).join('');
+        }
+
+        // Handle submission of new photo + story from form
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const title = document.getElementById('story-title').value;
+            const text = document.getElementById('story-text').value;
+            const imgToUse = selectedImageBase64 || "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=600";
+
+            // Push item to the top of our array
+            shakhariData.unshift({ title, image: imgToUse, text });
+            
+            // Refresh feed and clean inputs
+            loadContent();
+            document.getElementById('story-form').reset();
+            document.getElementById('upload-placeholder').innerText = "📷 Select From Phone Gallery";
+            selectedImageBase64 = "";
         }
 
         // Initialize display
